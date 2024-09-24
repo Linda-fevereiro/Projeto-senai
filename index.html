@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home e Apresentação do Site - Animação para Crianças</title>
+    <style>
+        :root {
+            --font-link-header: "Bebas Neue", sans-serif;
+            --font-texto: "Saira", sans-serif;
+            --background-color: LightBlue;
+            --text-color: #000000;
+            --button-bg-color: #e0e0e0;
+            --button-text-color: #000000;
+            --highlight-color: yellow;
+            --highlight-color-2: lightgreen;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: var(--font-texto);
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow: auto;
+        }
+
+        .theme-toggle-container {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+
+        button {
+            padding: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        button.dark:hover {
+            opacity: 0.8;
+            background-color: LightSteelBlue;
+        }
+
+        body.dark-mode {
+            --background-color: MidnightBlue;
+            --text-color: #ffffff;
+            --button-bg-color: #333333;
+            --button-text-color: #ffffff;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 0;
+            left: 10px;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transition: opacity 1s;
+            z-index: 10;
+        }
+
+        .small-logo {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            width: 80px; 
+            z-index: 15;
+            display: none; /* Initially hidden */
+        }
+
+        .slideshow-container {
+            display: none; /* Initially hidden */
+            max-width: 80%;
+            position: relative;
+            margin: auto;
+            z-index: 1;
+        }
+
+        .slides {
+            display: none;
+            text-align: center;
+            animation: slideIn 1s ease;
+        }
+
+        .slides img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .text {
+            background-color: var(--highlight-color);
+            padding: 10px;
+            border-radius: 5px;
+            color: #000;
+            font-weight: bold;
+            font-size: 18px;
+            animation: bounce 1s infinite alternate;
+        }
+
+        .content {
+            max-width: 90%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--highlight-color-2);
+            border-radius: 10px;
+            display: none; /* Initially hidden */
+            animation: fadeIn 1s;
+        }
+
+        .content section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: transparent;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            animation: slideInUp 0.5s forwards;
+        }
+
+        .content h2 {
+            background-color: LightSteelBlue;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 24px;
+            color: #000;
+            width: 100%;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .concerto {
+            max-width: 180px;
+            height: auto;
+            margin: 5px;
+        }
+
+        .navigation {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 5;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            font-size: 24px;
+            padding: 10px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+        }
+
+        .sound-toggle-container, .read-toggle-container {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        button.sound, button.read {
+            background-color: var(--button-bg-color);
+            color: var(--button-text-color);
+            padding: 5px;
+            font-size: 12px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .text { font-size: 14px; }
+            button { font-size: 8px; }
+            .content h2 { font-size: 20px; }
+            .content p { font-size: 14px; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .footer {
+  text-align: center;
+  padding: 10px;
+  background: #333;
+  color: white;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-box {
+  background-color: #d3d3d3;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+    </style>
+</head>
+
+<body>
+    <div class="theme-toggle-container">
+        <button class="dark" id="themeToggle">
+            <img src="tema.png" alt="tema" style="height: 20px;">
+        </button>
+    </div>
+
+    <div class="logo-container">
+        <img src="logo.png" alt="Logo" class="logo-light">
+    </div>
+
+    <img src="logo.png" alt="Logo Pequena" class="small-logo">
+
+    <div class="slideshow-container">
+        <div class="slides">
+            <img src="logo2.png" alt="Slide 1">
+            <div class="text">Bem-vindo a InclusionTechnician!</div>
+        </div>
+        <div class="slides">
+            <img src="images.png" alt="Slide 2">
+            <div class="text">A Inclusion Technician é uma plataforma de apoio escolar para alunos autistas e com TDAH.</div>
+        </div>
+        <div class="slides">
+            <img src="ods.png" alt="Slide 3">
+            <div class="text">A InclusionTechnician busca uma educação de qualidade.</div>
+        </div>
+        <div class="slides">
+            <img src="login.png" alt="Slide 4">
+            <div class="text">Faça seu cadastro e junte-se ao time da Inclusion Technician!<br><br>
+                <a href="cadastrar.html" class="button">Cadastrar</a>
+            </div>
+        </div>
+        <div class="slides">
+            <img src="curriculo.png" alt="Slide 5">
+            <div class="text">Quer saber mais sobre os profissionais de apoio?</div><br>
+            <a href="banco.html" class="button">Banco de Currículos</a>
+        </div>
+        <div class="slides">
+            <img src="feed.png" alt="Slide 6">
+            <div class="text">Seu feedback é muito importante para nós! Ajude-nos a melhorar.</div>
+            <a href="feedback.html" class="button">Deixe seu Feedback aqui!</a>
+        </div>
+
+        <div class="navigation">
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+    </div>
+
+    <div class="dots">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+        <span class="dot" onclick="currentSlide(6)"></span>
+    </div>
+
+    <div class="content">
+        <section>
+            <h2>Sobre Nós</h2>
+                        <p>A InclusionTechnician é uma plataforma criada para oferecer suporte educacional personalizado para crianças com necessidades especiais.</p>
+            <div class="image-container">
+                <img src="sobre1.png" alt="Sobre 1" class="concerto">
+                <img src="sobre2.png" alt="Sobre 2" class="concerto">
+                <img src="sobre3.png" alt="Sobre 3" class="concerto">
+            </div>
+        </section>
+
+        <section>
+            <h2>Nossa Metodologia</h2>
+            <p>Utilizamos métodos de ensino adaptativos e inclusivos, visando o desenvolvimento integral dos alunos.</p>
+            <div class="image-container">
+                <img src="met1.png" alt="Metodologia 1" class="concerto">
+                <img src="met2.png" alt="Metodologia 2" class="concerto">
+                <img src="met3.png" alt="Metodologia 3" class="concerto">
+            </div>
+        </section>
+
+        <section>
+            <h2>Banco de Currículos</h2>
+            <p>Conheça nossos profissionais qualificados que oferecem apoio educacional especializado.</p>
+            <div class="image-container">
+                <img src="banco1.png" alt="Currículo 1" class="concerto">
+                <img src="banco2.png" alt="Currículo 2" class="concerto">
+                <img src="banco3.png" alt="Currículo 3" class="concerto">
+            </div>
+        </section>
+
+        <section>
+            <h2>Apoio emocional e profesional</h2>
+            <p>Explore nossos jogos interativos que ajudam no aprendizado de forma divertida!</p>
+            <div class="image-container">
+                <img src="dire1.png" alt="Jogo 1" class="concerto">
+                <img src="dire2.png" alt="Jogo 2" class="concerto">
+                <img src="dire3.png" alt="Jogo 3" class="concerto">
+            </div>
+        </section>
+
+        <section>
+            <h2>Apoio Profissional</h2>
+            <p>Oferecemos suporte contínuo de profissionais capacitados para auxiliar no desenvolvimento educacional.</p>
+            <div class="image-container">
+                <img src="como1.png" alt="Apoio 1" class="concerto">
+                <img src="como2.png" alt="Apoio 2" class="concerto">
+                <img src="como3.png" alt="Apoio 3" class="concerto">
+            </div>
+        </section>
+
+        <section>
+            <h2>Contato</h2>
+            <p>Entre em contato conosco para mais informações sobre nossos serviços!</p>
+            <div class="image-container">
+                <img src="cont1.png" alt="Contato 1" class="concerto">
+                <img src="cont2.png" alt="Contato 2" class="concerto">
+                <img src="cont3.png" alt="Contato 3" class="concerto">
+            </div>
+        </section>
+    </div>
+<footer class="footer-box">
+        <p>© 2024 Técnico em Inclusão. Todos os direitos reservados.</p>
+    </footer>
+
+    <div class="sound-toggle-container">
+        <button class="sound" id="soundToggle"><img src="son.png" alt="som" style="height: 30px;"></button>
+        <button class="read" id="readToggle"><img src="ler.png" alt="ler" style="height: 30px;"></button>
+    </div>
+
+    <audio id="calmSound" loop>
+        <source src="data:audio/mpeg;base64,//uQxAAEAA..."> <!-- Base64 encoded audio -->
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <script>
+        let slideIndex = 0;
+        let logoContainer = document.querySelector('.logo-container');
+        let smallLogo = document.querySelector('.small-logo');
+        let content = document.querySelector('.content');
+        let slideshowContainer = document.querySelector('.slideshow-container');
+
+        function showSlides() {
+            let slides = document.querySelectorAll('.slides');
+            let dots = document.querySelectorAll('.dot');
+
+            slides.forEach(slide => slide.style.display = 'none');
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1; }
+
+            slides[slideIndex - 1].style.display = 'block';
+            dots[slideIndex - 1].classList.add('active');
+            setTimeout(showSlides, 8000);
+        }
+
+        function plusSlides(n) {
+            slideIndex += n - 1;
+            showSlides();
+        }
+
+        function currentSlide(n) {
+            slideIndex = n - 1;
+            showSlides();
+        }
+
+        setTimeout(() => {
+            logoContainer.style.opacity = '0';
+            setTimeout(() => {
+                logoContainer.style.display = 'none';
+                smallLogo.style.display = 'block';
+                slideshowContainer.style.display = 'block';
+                content.style.display = 'block';
+                showSlides();
+            }, 1000);
+        }, 3000);
+
+        const themeToggleButton = document.getElementById('themeToggle');
+        themeToggleButton.addEventListener('click', function () {
+            document.body.classList.toggle('dark-mode');
+        });
+
+        const soundToggleButton = document.getElementById('soundToggle');
+        const calmingSound = document.getElementById('calmSound');
+        let isSoundPlaying = false;
+
+        soundToggleButton.addEventListener('click', function () {
+            if (isSoundPlaying) {
+                calmingSound.pause();
+                isSoundPlaying = false;
+            } else {
+                calmingSound.play();
+                isSoundPlaying = true;
+            }
+        });
+
+        const readToggleButton = document.getElementById('readToggle');
+        readToggleButton.addEventListener('click', function () {
+            const utterance = new SpeechSynthesisUtterance();
+            utterance.lang = 'pt-BR';
+            utterance.text = document.body.innerText;
+            speechSynthesis.speak(utterance);
+        });
+    </script>
+</body>
+</html>
+
