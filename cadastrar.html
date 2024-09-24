@@ -72,7 +72,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
+            width: 90%;
+            max-width: 700px;
             margin-top: 80px;
             flex-direction: row;
             opacity: 0; /* Initial opacity for animation */
@@ -86,12 +87,10 @@
 
         .container {
             background: var(--form-bg-color);
-            padding: 30px; /* Increased padding */
+            padding: 40px; /* Increased padding */
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             width: 100%;
-            max-width: 500px; /* Increased max width */
-            height: auto;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -119,12 +118,24 @@
             color: #333;
         }
 
-        .form-group input, .form-group select {
+        .form-group input,
+        .form-group select {
             width: 100%;
             padding: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            height: 40px;
+            height: 45px; /* Increased height */
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap; /* Allow wrapping */
+        }
+
+        .form-group.wide {
+            flex: 1 1 48%; /* Adjust for larger screens */
         }
 
         .form-group input[type="submit"] {
@@ -184,37 +195,63 @@
         <div class="container">
             <h2>Formulário de Inscrição</h2>
             <form id="registrationForm" onsubmit="saveDataAndShowLogin(event)">
-                <div class="form-group">
-                    <label for="studentName">Nome do Aluno:</label>
-                    <input type="text" id="studentName" name="studentName" required>
+                <div class="form-row">
+                    <div class="form-group wide">
+                        <label for="studentName">Nome do Aluno:</label>
+                        <input type="text" id="studentName" name="studentName" required>
+                    </div>
+                    <div class="form-group wide">
+                        <label for="guardianName">Nome do Responsável:</label>
+                        <input type="text" id="guardianName" name="guardianName" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="disabilityType">Tipo de Deficiência:</label>
-                    <select id="disabilityType" name="disabilityType" required>
-                        <option value="" disabled selected>Selecione aqui</option>
-                        <option value="tdah">TDAH</option>
-                        <option value="autismo">Autismo</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-group wide">
+                        <label for="disabilityType">Tipo de Deficiência:</label>
+                        <select id="disabilityType" name="disabilityType" required>
+                            <option value="" disabled selected>Selecione aqui</option>
+                            <option value="tdah">TDAH</option>
+                            <option value="autismo">Autismo</option>
+                        </select>
+                    </div>
+                    <div class="form-group wide">
+                        <label for="age">Idade:</label>
+                        <input type="number" id="age" name="age" min="1" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="age">Idade:</label>
-                    <input type="number" id="age" name="age" min="1" required>
+                <div class="form-row">
+                    <div class="form-group wide">
+                        <label for="guardianEmail">Email do Responsável:</label>
+                        <input type="email" id="guardianEmail" name="guardianEmail" required>
+                    </div>
+                    <div class="form-group wide">
+                        <label for="phone">Telefone:</label>
+                        <input type="tel" id="phone" name="phone" pattern="[0-9]{10,11}" placeholder="(00) 00000-0000" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="guardianName">Nome do Responsável:</label>
-                    <input type="text" id="guardianName" name="guardianName" required>
+                <div class="form-row">
+                    <div class="form-group wide">
+                        <label for="address">Endereço:</label>
+                        <input type="text" id="address" name="address" required>
+                    </div>
+                    <div class="form-group wide">
+                        <label for="birthDate">Data de Nascimento:</label>
+                        <input type="date" id="birthDate" name="birthDate" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="guardianEmail">Email do Responsável:</label>
-                    <input type="email" id="guardianEmail" name="guardianEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Telefone:</label>
-                    <input type="tel" id="phone" name="phone" pattern="[0-9]{10,11}" placeholder="(00) 00000-0000" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Senha:</label>
-                    <input type="password" id="password" name="password" required>
+                <div class="form-row">
+                    <div class="form-group wide">
+                        <label for="contactPreference">Preferência de Contato:</label>
+                        <select id="contactPreference" name="contactPreference" required>
+                            <option value="" disabled selected>Selecione aqui</option>
+                            <option value="telefone">Telefone</option>
+                            <option value="email">Email</option>
+                        </select>
+                    </div>
+                    <div class="form-group wide">
+                        <label for="password">Senha:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="confirmPassword">Confirmar Senha:</label>
@@ -238,7 +275,7 @@
                     <label for="userType">Você é:</label>
                     <select id="userType" name="userType" required>
                         <option value="" disabled selected>Selecione aqui</option>
-                        <option value="aluno">Aluno</option>
+                                                <option value="aluno">Aluno</option>
                         <option value="responsavel">Responsável</option>
                     </select>
                 </div>
@@ -266,9 +303,11 @@
             var age = parseInt(document.getElementById('age').value);
             var guardianName = document.getElementById('guardianName').value;
             var guardianEmail = document.getElementById('guardianEmail').value;
-                       var phone = document.getElementById('phone').value;
+            var phone = document.getElementById('phone').value;
+            var address = document.getElementById('address').value;
+            var birthDate = document.getElementById('birthDate').value;
+            var contactPreference = document.getElementById('contactPreference').value;
             var password = document.getElementById('password').value;
-            var confirmPassword = document.getElementById('confirmPassword').value;
 
             // Save data to local storage (for demo purposes)
             localStorage.setItem('studentName', studentName);
@@ -277,6 +316,9 @@
             localStorage.setItem('guardianName', guardianName);
             localStorage.setItem('guardianEmail', guardianEmail);
             localStorage.setItem('phone', phone);
+            localStorage.setItem('address', address);
+            localStorage.setItem('birthDate', birthDate);
+            localStorage.setItem('contactPreference', contactPreference);
             localStorage.setItem('password', password); // This should be encrypted in a real app
 
             // Determine the redirect page based on age
