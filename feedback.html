@@ -222,68 +222,81 @@
     </main>
 
     <script>
-        document.getElementById('themeToggle').onclick = function() {
-            document.body.classList.toggle('dark-mode');
-        };
+    // Carregar feedbacks do localStorage
+    const feedbacks = JSON.parse(localStorage.getItem('feedbacks')) || [];
 
-        const feedbacks = [];
+    // Função para salvar feedbacks no localStorage
+    function saveFeedbacks() {
+        localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+    }
 
-        document.getElementById('feedbackForm').onsubmit = function(event) {
-            event.preventDefault();
-            const name = document.getElementById('name').value;
-            const message = document.getElementById('message').value;
-            const feedback = { name, message, likes: 0, responses: [] };
-            feedbacks.push(feedback);
-            displayFeedbacks();
-            this.reset();
-            document.getElementById('thankYouMessages').style.display = 'block';
-        };
+    document.getElementById('themeToggle').onclick = function() {
+        document.body.classList.toggle('dark-mode');
+    };
 
-        function displayFeedbacks() {
-            const feedbackList = document.getElementById('feedbackList');
-            feedbackList.innerHTML = '';
+    document.getElementById('feedbackForm').onsubmit = function(event) {
+        event.preventDefault();
+        const name = document.getElementById('name').value;
+        const message = document.getElementById('message').value;
+        const feedback = { name, message, likes: 0, responses: [] };
+        feedbacks.push(feedback);
+        saveFeedbacks(); // Salvar feedbacks
+        displayFeedbacks();
+        this.reset();
+        document.getElementById('thankYouMessages').style.display = 'block';
+    };
 
-            feedbacks.forEach((feedback, index) => {
-                const feedbackItem = document.createElement('div');
-                feedbackItem.className = 'feedback-item';
-                feedbackItem.innerHTML = `
-                    <div class="feedback-content">
-                        <h4>${feedback.name}</h4>
-                        <p>${feedback.message}</p>
-                        <button onclick="likeFeedback(${index})">Curtir (${feedback.likes})</button>
-                        <button onclick="toggleResponseForm(${index})">Responder</button>
-                        <div class="response-form" id="responseForm${index}">
-                            <textarea placeholder="Sua resposta"></textarea>
-                            <button onclick="respondToFeedback(${index})">Enviar Resposta</button>
-                        </div>
-                        <div id="responses${index}"></div>
+    function displayFeedbacks() {
+        const feedbackList = document.getElementById('feedbackList');
+        feedbackList.innerHTML = '';
+
+        feedbacks.forEach((feedback, index) => {
+            const feedbackItem = document.createElement('div');
+            feedbackItem.className = 'feedback-item';
+            feedbackItem.innerHTML = `
+                <div class="feedback-content">
+                    <h4>${feedback.name}</h4>
+                    <p>${feedback.message}</p>
+                    <button onclick="likeFeedback(${index})">Curtir (${feedback.likes})</button>
+                    <button onclick="toggleResponseForm(${index})">Responder</button>
+                    <div class="response-form" id="responseForm${index}">
+                        <textarea placeholder="Sua resposta"></textarea>
+                        <button onclick="respondToFeedback(${index})">Enviar Resposta</button>
                     </div>
-                    <img src="feedback.png" alt="Imagem do Feedback" class="feedback-image"> <!-- Imagem adicionada -->
-                `;
-                feedbackList.appendChild(feedbackItem);
-            });
-        }
+                    <div id="responses${index}"></div>
+                </div>
+                <img src="feed.png" alt="Imagem do Feedback" class="feedback-image">
+            `;
+            feedbackList.appendChild(feedbackItem);
+        });
+    }
 
-        function likeFeedback(index) {
-            feedbacks[index].likes++;
+    function likeFeedback(index) {
+        feedbacks[index].likes++;
+        saveFeedbacks(); // Salvar feedbacks após curtir
+        displayFeedbacks();
+    }
+
+    function toggleResponseForm(index) {
+        const responseForm = document.getElementById(`responseForm${index}`);
+        responseForm.style.display = responseForm.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function respondToFeedback(index) {
+        const responseTextarea = document.querySelector(`#responseForm${index} textarea`);
+        const response = responseTextarea.value;
+        if (response) {
+            feedbacks[index].responses.push(response);
+            saveFeedbacks(); // Salvar feedbacks após resposta
             displayFeedbacks();
+            responseTextarea.value = '';
         }
+    }
 
-        function toggleResponseForm(index) {             const responseForm = document.getElementById(`responseForm${index}`);
-            responseForm.style.display = responseForm.style.display === 'block' ? 'none' : 'block';
-        }
+    // Exibir feedbacks ao carregar a página
+    displayFeedbacks();
+</script>
 
-        function respondToFeedback(index) {
-            const responseTextarea = document.querySelector(`#responseForm${index} textarea`);
-            const response = responseTextarea.value;
-            if (response) {
-                feedbacks[index].responses.push(response);
-                displayFeedbacks();
-                // Limpar o campo de resposta após enviar
-                responseTextarea.value = '';
-            }
-        }
-    </script>
 </body>
 </html>
 
