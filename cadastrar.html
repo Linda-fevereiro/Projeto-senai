@@ -321,6 +321,8 @@
             localStorage.setItem('contactPreference', contactPreference);
             localStorage.setItem('password', password); // This should be encrypted in a real app
 
+            window.location.href = 'perfil.html';
+            
             // Determine the redirect page based on age
             let redirectPage;
             if (age >= 3 && age <= 5) {
