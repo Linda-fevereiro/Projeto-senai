@@ -176,6 +176,26 @@
         .fade-in {
             animation: fadeIn 0.5s ease-in;
         }
+        .footer {
+  text-align: center;
+  padding: 10px;
+  background: #333;
+  color: white;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-box {
+  background-color: #d3d3d3;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
     </style>
 </head>
 <body>
@@ -293,6 +313,9 @@
             </form>
         </div>
     </div>
+<footer class="footer-box">
+        <p>© 2024 Inclusion Technician. Todos os direitos reservados.</p>
+    </footer>
 
     <script>
         function saveDataAndShowLogin(event) {
@@ -320,9 +343,8 @@
             localStorage.setItem('birthDate', birthDate);
             localStorage.setItem('contactPreference', contactPreference);
             localStorage.setItem('password', password); // This should be encrypted in a real app
-
             window.location.href = 'perfil.html';
-            
+
             // Determine the redirect page based on age
             let redirectPage;
             if (age >= 3 && age <= 5) {

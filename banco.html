@@ -112,6 +112,26 @@
             padding: 10px;
             border-radius: 5px;
         }
+        .footer {
+  text-align: center;
+  padding: 10px;
+  background: #333;
+  color: white;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-box {
+  background-color: #d3d3d3;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
     </style>
 </head>
 <body>
@@ -161,6 +181,9 @@
         <input type="text" id="chatInput" placeholder="Digite sua mensagem">
         <button id="sendChatBtn">Enviar</button>
     </div>
+<footer class="footer-box">
+        <p>© 2024 Inclusion Technician. Todos os direitos reservados.</p>
+    </footer>
 
     <script>
         const userTypeSelect = document.getElementById('userType');
