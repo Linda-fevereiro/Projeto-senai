@@ -26,7 +26,7 @@
             background-color: var(--background-color);
             color: var(--text-color);
             font-family: var(--font-texto);
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s, color 0.3s, opacity 0.5s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -225,6 +225,16 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
+        @keyframes spin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .spin {
+            animation: spin 2s linear infinite;
+            transform-style: preserve-3d; /* Para manter a perspectiva 3D */
+        }
+
         .footer-box {
             text-align: center;
             padding: 10px;
@@ -248,7 +258,7 @@
     </div>
 
     <div class="logo-container">
-        <img src="logo.png" alt="Logo" class="logo-light">
+        <img src="logo.png" alt="Logo" class="logo-light spin">
     </div>
 
     <img src="logo.png" alt="Logo Pequena" class="small-logo">
@@ -283,7 +293,7 @@
             <a href="feedback.html" class="button">Deixe seu Feedback aqui!</a>
         </div>
 
-        <div class="navigation">
+                <div class="navigation">
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
             <a class="next" onclick="plusSlides(1)">&#10095;</a>
         </div>
@@ -291,7 +301,7 @@
 
     <div class="dots">
         <span class="dot" onclick="currentSlide(1)"></span>
-                <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
         <span class="dot" onclick="currentSlide(3)"></span>
         <span class="dot" onclick="currentSlide(4)"></span>
         <span class="dot" onclick="currentSlide(5)"></span>
@@ -409,6 +419,7 @@
 
         setTimeout(() => {
             logoContainer.style.opacity = '0';
+            logoContainer.style.transition = 'opacity 1s ease';
             setTimeout(() => {
                 logoContainer.style.display = 'none';
                 smallLogo.style.display = 'block';
