@@ -223,6 +223,26 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+            .footer {
+  text-align: center;
+  padding: 10px;
+  background: #333;
+  color: white;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-box {
+  background-color: #d3d3d3;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
         }
     </style>
 </head>
@@ -326,6 +346,9 @@
 
         <button id="certificado" onclick="exibirCertificado()">Obter Certificado</button>
     </main>
+<footer class="footer-box">
+        <p>© 2024 Técnico em Inclusão. Todos os direitos reservados.</p>
+    </footer>
 
     <script>
         // Lógica do Slideshow
@@ -398,6 +421,26 @@
                     dropdown.style.display = "none";
                 }
             }
+            function watchVideo() {
+            let watchedVideosCount = parseInt(localStorage.getItem('watchedVideosIt3')) || 0;
+            watchedVideosCount++;
+            localStorage.setItem('watchedVideosIt3', watchedVideosCount);
+            alert("Vídeo assistido! Total: " + watchedVideosCount);
+        }
+            // Inside the loadProfile function of your profile page
+const age = parseInt(localStorage.getItem('age'));
+let watchedVideosKey;
+
+if (age >= 3 && age <= 5) {
+    watchedVideosKey = 'watchedVideosIt';
+} else if (age >= 6 && age <= 11) {
+    watchedVideosKey = 'watchedVideosIt2';
+} else {
+    watchedVideosKey = 'watchedVideosIt3';
+}
+
+document.getElementById('watchedVideosCount').innerText = localStorage.getItem(watchedVideosKey) || 0;
+
         };
     </script>
 </body>
